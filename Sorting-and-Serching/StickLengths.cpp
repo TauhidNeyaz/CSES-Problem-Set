@@ -19,20 +19,18 @@ int main() {
     
     long long high = v[n-1];
     long long low = v[0];
-    long long ans = 1e18; // Set to a very large value initially
+    long long ans = 1e18; 
 
     while (low <= high) {
         long long mid = low + (high - low) / 2;
         long long curr_ans = fn(v, mid);
 
-        // Adjust search space based on current answer
         if (fn(v, mid + 1) < curr_ans) {
             low = mid + 1;
         } else {
             high = mid - 1;
         }
 
-        // Update the answer
         ans = min(ans, curr_ans);
     }
 
