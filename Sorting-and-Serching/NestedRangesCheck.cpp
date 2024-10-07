@@ -5,43 +5,42 @@ int main() {
     int n; 
     cin >> n;
 
-    unordered_set<string> for_you, by_you;
-    multiset<int> range;  
-    vector<string> nums;
+    vector<int> for_you, by_you;
+    vector<vector<int>> nums;
+    
+    for (int i = 0; i < n; ++i) {
+        int a, b;
+        cin >> a >> b;
+        nums.push_back({a, b, i});
+    }
 
-    while (n--) {
-        int x, y;
-        cin >> x >> y;
+    sort(nums.begin(), nums.end(), [] (vector<int>& v1, vector<int>& v2) {
+        if (v1[0] == v2[0]) return v1[1] > v2[1];
+        return v1[0] < v2[0];
+    });
 
-        auto lb = range.lower_bound(x);
-        auto ub = range.upper_bound(y);
-        if (range.size() >= 2) lb = prev(lb);
+    vector<int> contain_range(n, 0), contribute_range(n, 0);
 
-        string mpp = to_string(x) + "," + to_string(y);  
-        nums.push_back(mpp);
-
-        range.insert(x);
-        range.insert(y);
-
-        if (lb != range.begin() && ub != range.end()) {
-            for_you.insert(mpp);
-            string MPP = to_string(*lb) + "," + to_string(*ub);
-            by_you.insert(MPP);
-
-            cout << "--" << *lb << "  " << *ub << "--" << endl;
+    int min_end = 2e9;
+    for (int i = n-1; i >= 0; --i) {
+        if (nums[i][1] >= min_end) {
+            contain_range[nums[i][2]] = 1;
         }
+        min_end = min(min_end, nums[i][1]);
     }
 
-    for (auto &i : nums) {
-        if (by_you.count(i)) cout << 1 << " ";
-        else cout << 0 << " ";
+    int max_end = 0;
+    for (int i = 0; i < n; ++i) {
+        if (nums[i][1] <= max_end) {
+            contribute_range[nums[i][2]] = 1;
+        }
+        max_end = max(max_end, nums[i][1]);
     }
+
+    for (auto &i : contain_range) cout << i << " ";
     cout << endl;
+    for (auto &i : contribute_range) cout << i << " ";
 
-    for (auto &i : nums) {
-        if (for_you.count(i)) cout << 1 << " ";
-        else cout << 0 << " ";
-    }
 
     return 0;
 }
@@ -53,4 +52,7 @@ int main() {
 2 4
 4 8
 3 6
+
+1,6,0  2,4,1  3,6,3  4,8,2
+
 */
