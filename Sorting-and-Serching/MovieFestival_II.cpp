@@ -5,8 +5,8 @@ using namespace std;
 
 int main() {
 
-    ll n;
-    cin >> n;
+    ll n, k;
+    cin >> n >> k;
     
     vector< vector<ll>> events;
     for (ll i = 0; i < n; ++i) {
@@ -21,15 +21,36 @@ int main() {
         return p1[1] < p2[1];
     });
 
-    int ans = 1;
-    int last = events[0][1];
-    
-    for (int i = 1; i < n; ++i) {
-        if (last <= events[i][0]) {
+    int ans = 0;
+    priority_queue<ll, vector<ll>, greater<ll>> min_heap;
+
+    for (auto timee : events) {
+
+        while (!min_heap.empty() && timee[0] >= min_heap.top())
+            min_heap.pop();
+
+        if (min_heap.size() < k) {
             ++ans;
-            last = events[i][1];
+            min_heap.push(timee[1]);
         }
     }
+
     cout << ans << endl;
 
 }
+
+/*
+10 2
+62 83
+38 87
+99 100
+37 74
+17 86
+40 44
+70 81
+65 97
+11 85
+92 95
+
+ans = 5
+*/
