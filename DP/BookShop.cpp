@@ -19,7 +19,7 @@ int main() {
     for (int i = 1; i <= n; i++) {
         for (int j = 0; j <= totalCost; j++) {
             int wt = cost[i - 1];
-            int page = pages[i - 1];  // Corrected this line
+            int page = pages[i - 1];  
 
             int a = dp[i - 1][j];
             int b = (j >= wt ? dp[i - 1][j - wt] + page : 0);

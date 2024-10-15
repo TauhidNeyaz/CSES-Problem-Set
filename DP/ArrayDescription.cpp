@@ -1,40 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> dp;
-int mod = 1e9+7;
+#define ll long long
 
-int fn(vector<int>& v , int idx, int m) {
-    if (idx == v.size()) 
-        return 1;
+int mod = 1e9 + 7;
+int dp[100005];
 
-    if (idx != 0 && abs(v[idx] - v[idx-1]) > 1) 
-        return 0;
+int fn(vector<ll>& nums, ll idx, ll val, ll m) {
 
-    if (dp[idx] != -1) 
-        return dp[idx];
+    if (idx == nums.size()) return 1;
+    if (val < 1 && val > m) return 0;
 
-    int a = 0;
-    if (v[idx] == 0) {
-        for (int val = 1; val <= m; ++val) {
-            v[idx] = val;
-            a = (a + fn(v, idx + 1, m)) % mod;  
+    if (nums[idx] != 0) {
+        if (nums[idx] == val) {
+            return fn(nums, idx + 1, val, m);
+        } else {
+            return 0;
         }
-        v[idx] = 0;  
-    } else {
-        a = fn(v, idx+1, m);  
     }
 
-    return dp[idx] = a % mod;
+    ll ans = 0;
+
+    ans = fn(nums, idx + 1, val + 1, m) + 
+            fn(nums, idx + 1, val - 1, m) + 
+            fn(nums, idx + 1, val, m);
+    
+    return ans;
+            
+
 }
 
 int main() {
-    int n, m;
+    ll n, m;
     cin >> n >> m;
-    vector<int> v(n);
+    vector<ll> v(n);
     for (auto &i : v) cin >> i;
-    
-    dp.resize(n+1, -1);  
 
-    cout << fn(v, 0, m) << endl;  
+    ll sum = 0;
+    for (int val = 1; val <= m; ++val) {
+        sum += (fn(v, 0, val, m) % mod);
+    }
+
+    cout << sum << endl;
+
+    
 }
