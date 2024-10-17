@@ -1,49 +1,74 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
 
-#define ll long long int
-#define pb push_back
-#define vi vector<int>
-#define vvi vector<vector<int>>
-#define vs vector<string>
-#define vll vector<long long int>
-#define vvll vector<vector<long long int>>
-#define lb cout<<endl
+    int testCases;
+    cin >> testCases;
 
+    while (testCases--) {
+        int n;
+        cin >> n;
 
-void functionToSolve() {
+        vector<int> arr(n + 1);
+        for (int i = 1; i <= n; i++) {
+            cin >> arr[i];
+        }
 
-    int n; cin >> n;
-    vector<ll> v(n);
+        long long result = 0;
 
-    for (auto &i : v) {
-        cin>>i;
+        // Forward direction
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= 99 && i + j <= n; j++) {
+                int idx2 = i + j;
+                int diff = abs(arr[i] - arr[idx2]);
+
+                if (diff < j) continue;
+
+                if (diff == j) {
+                    result += j + 1;
+                } else if (diff > j && (diff - j) % 2 == 0) {
+                    long long mid1 = (i + idx2 - diff) / 2;
+                    if ((i + idx2 - diff) % 2 == 0 && mid1 >= 1 && mid1 <= n) {
+                        result += 1;
+                    }
+
+                    long long mid2 = (i + idx2 + diff) / 2;
+                    if ((i + idx2 + diff) % 2 == 0 && mid2 >= 1 && mid2 <= n) {
+                        result += 1;
+                    }
+                }
+            }
+        }
+
+        // Backward direction
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= 99 && i - j >= 1; j++) {
+                int idx2 = i - j;
+                int diff = abs(arr[i] - arr[idx2]);
+
+                if (diff < j) continue;
+
+                if (diff == j) {
+                    result += j + 1;
+                } else if (diff > j && (diff - j) % 2 == 0) {
+                    long long mid1 = (i + idx2 - diff) / 2;
+                    if ((i + idx2 - diff) % 2 == 0 && mid1 >= 1 && mid1 <= n) {
+                        result += 1;
+                    }
+
+                    long long mid2 = (i + idx2 + diff) / 2;
+                    if ((i + idx2 + diff) % 2 == 0 && mid2 >= 1 && mid2 <= n) {
+                        result += 1;
+                    }
+                }
+            }
+        }
+
+        cout << result << "\n";
     }
 
-    ll sum = 0;
-    for (ll i = 0; i < n-2; ++i) {
-        sum += v[i];
-    }
-
-    v[n-2] -= sum;
-
-    cout << v[n-1] - v[n-2] << endl;
-
-    
-}
-
-int main()
-{
-    
-    int testCase; cin>>testCase;
-    
-    while (testCase--) {
-        
-        functionToSolve();
-        
-    }
-    
     return 0;
-    
 }
