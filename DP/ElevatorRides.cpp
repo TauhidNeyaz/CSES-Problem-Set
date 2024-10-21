@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 
-
 #define loop(i, l, r) for (int i = (int)(l); i <= (int)(r); ++i)
-#define rloop(i, l, r) for (int i = (int)(r); i <= (int)(l); --i)
+#define rloop(i, l, r) for (int i = (int)(r); i >= (int)(l); --i)
 
 #define pb push_back
 #define fi first
