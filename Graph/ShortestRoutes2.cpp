@@ -25,11 +25,8 @@ typedef double ld;
 
 void FloydWarsal(vector<vll>& G) {
     int n = G.size();
-    int k;
     loop(k, 0, n-1) {
-        int i;
         loop(i, 0, n-1) {
-            int j;
             loop(j, 0, n-1) {
                 G[i][j] = min(G[i][j], G[i][k] + G[k][j]);
             }
@@ -44,7 +41,6 @@ void Tauhid() {
     cin >> V >> E >> Q;
 
     vector<vll> G(V+1, vll(V+1, 1e18));
-    int i;
     loop(i, 1, E) {
         ll u, v, c;
         cin >> u >> v >> c;
@@ -52,7 +48,6 @@ void Tauhid() {
         G[v][u] = min(c, G[u][v]);
     }
 
-    i = 0;
     loop(i, 0, V) {
         int j;
         loop(j, 0, V) {
